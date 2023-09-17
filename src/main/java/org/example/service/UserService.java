@@ -1,7 +1,7 @@
 package org.example.service;
 
 import org.example.models.Id;
-import org.example.models.User;
+import org.example.models.user.User;
 
 import java.util.UUID;
 
@@ -15,4 +15,8 @@ public interface UserService {
     void updateUser(User user);
 
     void deleteUser(UUID id);
+
+    String getRefreshToken(String email);
+
+    void updateRefreshToken(String email, String refreshToken);
 }

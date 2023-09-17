@@ -5,7 +5,7 @@ import org.example.exceptions.models.CreationException;
 import org.example.exceptions.models.NotFoundException;
 import org.example.mapping.UserMapper;
 import org.example.models.Id;
-import org.example.models.User;
+import org.example.models.user.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -54,5 +54,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public void deleteUser(UUID id) {
         userMapper.deleteUser(id);
+    }
+
+    @Override
+    public String getRefreshToken(String email) {
+        return userMapper.selectRefreshToken(email);
+    }
+
+    @Override
+    public void updateRefreshToken(String email, String refreshToken) {
+        userMapper.updateRefreshToken(email, refreshToken);
     }
 }

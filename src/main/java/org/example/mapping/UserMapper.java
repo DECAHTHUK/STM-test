@@ -1,7 +1,6 @@
 package org.example.mapping;
 
 import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
@@ -9,9 +8,8 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.example.models.Id;
-import org.example.models.User;
+import org.example.models.user.User;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -22,59 +20,38 @@ public interface UserMapper {
 
     @Result(property = "id", column = "id")
     @Select("""
-            INSERT INTO users (email, password, first_name, second_name, user_role)
-            VALUES(#{email}, #{password}, #{firstName}, #{secondName}, #{userRole})
+            INSERT INTO users (email, password, full_name, user_role)
+            VALUES(#{email}, #{password}, #{fullName}, #{userRole})
             RETURNING id;
             """)
     Id insertUser(User user) throws RuntimeException;
 
     @Results(value = {
-            @Result(property = "subordinates", javaType = List.class,
-                    column = "id", many = @Many(select = "selectSubordinates")),
-            @Result(property = "firstName", column = "first_name"),
-            @Result(property = "secondName", column = "second_name"),
+            @Result(property = "fullName", column = "full_name"),
             @Result(property = "userRole", column = "user_role"),
             @Result(column = "id", property = "id")
     })
     @Select("""
-            SELECT u.id, u.email, u.password, u.first_name, u.second_name, u.user_role
+            SELECT u.id, u.email, u.password, u.full_name, u.user_role
             FROM users as u
             WHERE u.id = '${uuid}';
             """)
     User selectUser(@Param("uuid") UUID uuid);
 
     @Results(value = {
-            @Result(property = "firstName", column = "first_name"),
-            @Result(property = "secondName", column = "second_name"),
+            @Result(property = "fullName", column = "full_name"),
             @Result(property = "userRole", column = "user_role")
     })
     @Select("""
-            SELECT u.id, u.email, u.password, u.first_name, u.second_name, u.user_role
+            SELECT u.id, u.email, u.password, u.full_name, u.user_role
             FROM users as u
             WHERE u.email = #{email};
             """)
     User selectUserByEmail(String email);
 
-    /**
-     * Additional query for our many-to-many relationship(myBatis works only this way)
-     */
-    @Results(value = {
-            @Result(property = "firstName", column = "first_name"),
-            @Result(property = "secondName", column = "second_name"),
-            @Result(property = "userRole", column = "user_role")
-    })
-    @Select("""
-            SELECT u.id, u.email, u.password, u.first_name, u.second_name, u.user_role
-            FROM users_relations as r
-            JOIN users as u on u.id = r.user_id
-            WHERE r.approver_id = '${uuid}';
-            """)
-    User selectSubordinates(@Param("uuid") UUID uuid);
-
     @Update("""
             UPDATE users
-            SET email=#{email}, password=#{password}, first_name=#{firstName},
-            second_name=#{secondName}, user_role=#{userRole}
+            SET email=#{email}, password=#{password}, full_name=#{fullName}, user_role=#{userRole}
             WHERE id = uuid(#{id});
             """)
     void updateUser(User user);
@@ -84,4 +61,17 @@ public interface UserMapper {
             WHERE id = '${userId}';
             """)
     void deleteUser(@Param("userId") UUID userId);
+
+    @Select("""
+            SELECT refresh_token FROM users
+            WHERE email = #{email};
+            """)
+    String selectRefreshToken(String email);
+
+    @Update("""
+            UPDATE users
+            SET refresh_token = #{refreshToken}
+            WHERE email = #{email};
+            """)
+    void updateRefreshToken(String email, String refreshToken);
 }
