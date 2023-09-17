@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class AuthException extends ApplicationException{
     public AuthException(String message) {
-        super(message, HttpStatus.FORBIDDEN);
+        super(message, HttpStatus.UNAUTHORIZED);
     }
 }

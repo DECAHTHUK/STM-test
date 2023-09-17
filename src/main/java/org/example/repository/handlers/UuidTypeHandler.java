@@ -1,4 +1,4 @@
-package org.example.mapping.handlers;
+package org.example.repository.handlers;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;

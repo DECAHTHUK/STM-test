@@ -5,7 +5,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class RouteDto {
+public class RouteUpdateRequest {
+    private String id;
+
     private String departurePoint;
 
     private String destinationPoint;

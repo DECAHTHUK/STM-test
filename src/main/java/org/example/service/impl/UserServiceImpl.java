@@ -1,11 +1,12 @@
-package org.example.service;
+package org.example.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.exceptions.models.CreationException;
 import org.example.exceptions.models.NotFoundException;
-import org.example.mapping.UserMapper;
+import org.example.repository.UserMapper;
 import org.example.models.Id;
 import org.example.models.user.User;
+import org.example.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +14,18 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public Id createUser(User user) {
-        try {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            return userMapper.insertUser(user);
-        } catch (Exception e) {
-            throw new CreationException("Error creating this user: " + e.getMessage());
+        if (userMapper.selectUserByEmail(user.getEmail()) != null) {
+            throw new CreationException("User with email " + user.getEmail() + " already exists");
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userMapper.insertUser(user);
     }
 
     @Override
@@ -48,6 +48,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(User user) {
+        User userFromDb = userMapper.selectUserByEmail(user.getEmail());
+        if (userFromDb != null && !userFromDb.getId().equals(user.getId())) {
+            throw new CreationException("User with email " + user.getEmail() + " already exists");
+        }
         userMapper.updateUser(user);
     }
 

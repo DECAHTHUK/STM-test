@@ -1,4 +1,4 @@
-package org.example.mapping;
+package org.example.repository;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,9 +12,6 @@ import org.example.models.user.User;
 
 import java.util.UUID;
 
-/**
- * User CRUD
- */
 @Mapper
 public interface UserMapper {
 

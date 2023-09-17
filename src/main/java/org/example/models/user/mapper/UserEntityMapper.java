@@ -6,7 +6,7 @@ import org.example.models.user.UserResponse;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface UserMapper {
+public interface UserEntityMapper {
     UserResponse userToUserResponse(User user);
 
     User userDtoToUser(UserDto userDto);

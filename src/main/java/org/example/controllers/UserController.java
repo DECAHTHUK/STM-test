@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.models.Id;
 import org.example.models.user.User;
 import org.example.models.user.UserResponse;
-import org.example.models.user.mapper.UserMapper;
+import org.example.models.user.mapper.UserEntityMapper;
 import org.example.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,22 +25,22 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
 
-    private final UserMapper userMapper;
+    private final UserEntityMapper userEntityMapper;
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("")
-    public Id createNewUser(@Valid @RequestBody User user) {
+    @PostMapping
+    public Id createNewUser(@RequestBody @Valid User user) {
         return userService.createUser(user);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BUYER')")
     @GetMapping("/{uuid}")
     public UserResponse getUserById(@PathVariable UUID uuid) {
-        return userMapper.userToUserResponse(userService.findById(uuid));
+        return userEntityMapper.userToUserResponse(userService.findById(uuid));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PutMapping("")
+    @PutMapping
     public void updateUser(@RequestBody User user) {
         userService.updateUser(user);
     }

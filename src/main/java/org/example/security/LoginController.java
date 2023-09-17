@@ -3,7 +3,7 @@ package org.example.security;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.models.user.UserDto;
-import org.example.models.user.mapper.UserMapper;
+import org.example.models.user.mapper.UserEntityMapper;
 import org.example.security.models.JwtAuthentication;
 import org.example.security.models.LoginRequest;
 import org.example.security.models.LoginResponse;
@@ -27,10 +27,10 @@ public class LoginController {
 
     private final UserService userService;
 
-    private final UserMapper userMapper;
+    private final UserEntityMapper userEntityMapper;
 
     @PostMapping
-    public LoginResponse login(@RequestBody LoginRequest loginRequest) {
+    public LoginResponse login(@RequestBody @Valid LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
 
@@ -38,7 +38,7 @@ public class LoginController {
     @ResponseStatus(HttpStatus.CREATED)
     public void registerNewUser(@RequestBody @Valid UserDto userDto) {
         userService.createUser(
-                userMapper.userDtoToUser(userDto).toBuilder()
+                userEntityMapper.userDtoToUser(userDto).toBuilder()
                         .userRole(Role.USER.toString()).build());
     }
 

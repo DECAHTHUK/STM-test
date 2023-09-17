@@ -2,16 +2,15 @@ package org.example.models.ticket;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.models.route.RouteEntity;
 
 import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
-public class TicketResponse {
+public class TicketUpdateRequest {
     private String id;
 
-    private RouteEntity route;
+    private String routeId;
 
     private Timestamp date;
 
