@@ -15,18 +15,19 @@
             <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="email" type="VARCHAR(100)">
+            <column name="email" type="TEXT">
                 <constraints primaryKey="false" nullable="false" unique="true"/>
             </column>
-            <column name="password" type="VARCHAR(64)">
+            <column name="password" type="TEXT">
                 <constraints nullable="false"/>
             </column>
-            <column name="full_name" type="VARCHAR(100)">
+            <column name="full_name" type="TEXT">
                 <constraints nullable="false"/>
             </column>
-            <column name="user_role" type="VARCHAR(50)">
+            <column name="user_role" type="TEXT">
                 <constraints nullable="false"/>
             </column>
+            <column name="refresh_token" type="TEXT"/>
         </createTable>
 
         <!-- TICKETS -->

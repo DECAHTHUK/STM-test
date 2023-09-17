@@ -12,8 +12,6 @@
         <createIndex tableName="users" indexName="idx_users_email">
             <column name="email"/>
         </createIndex>
-        
-
 
     </changeSet>
 </databaseChangeLog>
