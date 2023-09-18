@@ -15,7 +15,7 @@ public class TicketEntity {
 
     private Timestamp date;
 
-    private Integer seatNumber;
+    private String seatNumber;
 
     private Integer price;
 

@@ -30,19 +30,13 @@
             <column name="refresh_token" type="TEXT"/>
         </createTable>
 
-        <!-- TICKETS -->
-        <createTable tableName="tickets">
+        <!-- TRANSPORTERS -->
+        <createTable tableName="transporters">
             <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="route_id" type="UUID">
-                <constraints foreignKeyName="fk_ticket_route" references="route(id)" nullable="false"/>
-            </column>
-            <column name="date" type="TIMESTAMPTZ"/>
-            <column name="seat_number" type="INTEGER"/>
-            <column name="price" type="INTEGER"/>
-            <column name="currency" type="TEXT"/>
-            <column name="available" type="BOOLEAN" defaultValue="true"/>
+            <column name="name" type="TEXT"/>
+            <column name="phone_number" type="TEXT"/>
         </createTable>
 
         <!-- ROUTES -->
@@ -53,18 +47,24 @@
             <column name="departure_point" type="TEXT"/>
             <column name="destination_point" type="TEXT"/>
             <column name="transporter_id" type="UUID">
-                <constraints foreignKeyName="fk_route_transporter" references="transporter(id)" nullable="false"/>
+                <constraints foreignKeyName="fk_route_transporter" references="transporters(id)" nullable="false"/>
             </column>
             <column name="duration_in_minutes" type="INTEGER"/>
         </createTable>
 
-        <!-- TRANSPORTERS -->
-        <createTable tableName="transporters">
+        <!-- TICKETS -->
+        <createTable tableName="tickets">
             <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="name" type="TEXT"/>
-            <column name="phone_number" type="TEXT"/>
+            <column name="route_id" type="UUID">
+                <constraints foreignKeyName="fk_ticket_route" references="routes(id)" nullable="false"/>
+            </column>
+            <column name="date" type="TIMESTAMPTZ"/>
+            <column name="seat_number" type="TEXT"/>
+            <column name="price" type="INTEGER"/>
+            <column name="currency" type="TEXT"/>
+            <column name="available" type="BOOLEAN" defaultValue="true"/>
         </createTable>
 
         <!-- USERS_TICKETS -->

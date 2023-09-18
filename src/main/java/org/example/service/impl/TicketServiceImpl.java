@@ -8,14 +8,28 @@ import org.example.models.ticket.TicketEntity;
 import org.example.models.ticket.TicketUpdateRequest;
 import org.example.repository.TicketMapper;
 import org.example.service.TicketService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class TicketServiceImpl implements TicketService {
     private final TicketMapper ticketMapper;
+
+    @Value("${pagination}")
+    private static int ROWS_AMOUNT;
+
+    @Override
+    public List<TicketEntity> findAvailable(Timestamp startDate, Timestamp endDate, String departureQuery, String destinationQuery,
+                                            String transporterQuery, Integer page, Integer size) {
+        int paginationSize = size == null ? ROWS_AMOUNT : size;
+        return ticketMapper.findAvailableTicketsWithFilters(startDate, endDate, departureQuery, destinationQuery, transporterQuery,
+                page * paginationSize, paginationSize);
+    }
 
     @Override
     public Id createTicket(TicketDto ticketDto) {

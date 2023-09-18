@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,6 +31,20 @@ public class TicketController {
     private final TicketService ticketService;
 
     private final TicketEntityMapper ticketEntityMapper;
+
+    //Well filtering could have been made much more abstract, but i think for now it fits the technical task
+    @GetMapping("/available")
+    public List<TicketResponse> getAvailableTickets(@RequestParam(name = "start_date", required = false) Timestamp startDate,
+                                                    @RequestParam(name = "end_date", required = false) Timestamp endDate,
+                                                    @RequestParam(name = "departure_query", required = false) String departureQuery,
+                                                    @RequestParam(name = "destination_query", required = false) String destinationQuery,
+                                                    @RequestParam(name = "transporter_query", required = false) String transporterQuery,
+                                                    @RequestParam(name = "page") Integer page,
+                                                    @RequestParam(name = "size", required = false) Integer size) {
+        return ticketService.findAvailable(startDate, endDate, departureQuery, destinationQuery, transporterQuery, page, size)
+                .stream().map(ticketEntityMapper::ticketToTicketResponse).toList();
+    }
+
     @PostMapping
     public Id createNewTicket(@RequestBody @Valid TicketDto ticketDto) {
         return ticketService.createTicket(ticketDto);

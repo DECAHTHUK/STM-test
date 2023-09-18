@@ -6,16 +6,23 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.example.models.Id;
 import org.example.models.ticket.TicketDto;
 import org.example.models.ticket.TicketEntity;
 import org.example.models.ticket.TicketUpdateRequest;
 
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Mapper
 public interface TicketMapper {
+    @SelectProvider(type = TicketProvider.class, method = "findAvailableTicketsWithFilters")
+    List<TicketEntity> findAvailableTicketsWithFilters(@Param("startDate") Timestamp startDate, @Param("endDate") Timestamp endDate,
+                                                       @Param("departureQuery") String departureQuery, @Param("destinationQuery") String destinationQuery,
+                                                       @Param("transporterQuery") String transporterQuery, @Param("offset") Integer offset, @Param("size") Integer size);
     @Result(property = "id", column = "id")
     @Select("""
             INSERT INTO tickets (route_id, date, seat_number, price, currency, available)

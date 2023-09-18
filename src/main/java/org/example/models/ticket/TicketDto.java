@@ -12,7 +12,7 @@ public class TicketDto {
 
     private Timestamp date;
 
-    private Integer seatNumber;
+    private String seatNumber;
 
     private Integer price;
 
