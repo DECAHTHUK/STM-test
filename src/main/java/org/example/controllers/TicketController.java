@@ -11,6 +11,7 @@ import org.example.service.TicketService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,7 +26,6 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping("/api/tickets")
 public class TicketController {
     private final TicketService ticketService;
@@ -45,21 +45,35 @@ public class TicketController {
                 .stream().map(ticketEntityMapper::ticketToTicketResponse).toList();
     }
 
+    @PatchMapping("/{uuid}/buy")
+    public void buyTicket(@PathVariable UUID uuid) {
+        ticketService.buyTicket(uuid);
+    }
+
+    @GetMapping("/current")
+    public List<TicketResponse> getAllBoughtTickets() {
+        return ticketService.getCurrentUserTickets().stream().map(ticketEntityMapper::ticketToTicketResponse).toList();
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public Id createNewTicket(@RequestBody @Valid TicketDto ticketDto) {
         return ticketService.createTicket(ticketDto);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{uuid}")
     public TicketResponse getTicketById(@PathVariable UUID uuid) {
         return ticketEntityMapper.ticketToTicketResponse(ticketService.findById(uuid));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping
     public void updateTicket(@RequestBody @Valid TicketUpdateRequest ticketUpdateRequest) {
         ticketService.update(ticketUpdateRequest);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{uuid}")
     public void deleteTicket(@PathVariable UUID uuid) {
         ticketService.delete(uuid);

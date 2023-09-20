@@ -19,4 +19,8 @@ public interface TicketService {
     void update(TicketUpdateRequest ticketUpdateRequest);
 
     void delete(UUID uuid);
+
+    void buyTicket(UUID uuid);
+
+    List<TicketEntity> getCurrentUserTickets();
 }

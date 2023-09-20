@@ -25,7 +25,7 @@ public interface TransporterMapper {
     @Result(property = "phoneNumber", column = "phone_number")
     @Select("""
             SELECT * FROM transporters
-            WHERE id = '${uuid};
+            WHERE id = '${uuid}';
             """)
     TransporterEntity selectTransporter(@Param("uuid") UUID uuid);
 

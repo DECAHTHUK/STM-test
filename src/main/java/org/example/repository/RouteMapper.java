@@ -35,7 +35,7 @@ public interface RouteMapper {
             SELECT r.id, r.departure_point, r.destination_point, r.duration_in_minutes, t.id as trans_id, t.name, t.phone_number
             FROM routes r
             JOIN transporters t on r.transporter_id = t.id
-            WHERE r.id = '${uuid};
+            WHERE r.id = '${uuid}';
             """)
     RouteEntity selectRoute(@Param("uuid") UUID uuid);
 

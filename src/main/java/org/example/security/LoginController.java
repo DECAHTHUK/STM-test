@@ -39,7 +39,7 @@ public class LoginController {
     public void registerNewUser(@RequestBody @Valid UserDto userDto) {
         userService.createUser(
                 userEntityMapper.userDtoToUser(userDto).toBuilder()
-                        .userRole(Role.USER.toString()).build());
+                        .userRole(Role.BUYER.toString()).build());
     }
 
     @PostMapping("/access")
