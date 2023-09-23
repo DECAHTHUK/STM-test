@@ -1,5 +1,5 @@
 FROM gradle:latest AS build
-COPY --chown=gradle:gradle . /home/gradle/src
+COPY --chown=gradle:gradle ./kafka-consumer /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle build -x test
 

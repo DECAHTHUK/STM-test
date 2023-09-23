@@ -1,0 +1,80 @@
+version: '3'
+
+services:
+  ticket-service:
+    build:
+      dockerfile: ./ticket-service/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-ticket-service
+    environment:
+      DB_HOST: postgres-ticket-service
+      DB_PORT: 8000
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 29092
+
+  kafka-consumer:
+    build:
+      dockerfile: ./kafka-consumer/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres-kafka
+      - kafka
+    environment:
+      DB_HOST: postgres-kafka
+      DB_PORT: 8001
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 29092
+
+  postgres-kafka:
+    image: "postgres:14.2"
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: qwerty1234
+      POSTGRES_USER: test
+      POSTGRES_DB: stmTest-kafka
+    ports:
+      - "8001"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql-kafka/data
+    command: -p 8001
+
+  postgres-ticket-service:
+    image: "postgres:14.2"
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: qwerty1234
+      POSTGRES_USER: test
+      POSTGRES_DB: stmTest
+    ports:
+      - "8000"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql-ticket-service/data
+    command: -p 8000
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "22181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - "29092:29092"
+    hostname: kafka
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
