@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+spring:
+  liquibase:
+    change-log: classpath:/db/changelog.xml
+    enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/stmTest-kafka
+    username: test
+    password: qwerty1234
+    driver-class-name: org.postgresql.Driver
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: tickets
