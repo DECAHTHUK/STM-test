@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1" author="DECAHTHUK">
+
+        <insert tableName="transporters">
+            <column name="id" value="a6a89f14-67e5-46fc-a868-a28ece344f45"/>
+            <column name="name" value="Red Wings"/>
+            <column name="phone_number" value="+78888888888"/>
+        </insert>
+        <insert tableName="transporters">
+            <column name="id" value="d3b1749d-ca5a-459c-8f1c-5ec236fe5776"/>
+            <column name="name" value="Rest"/>
+            <column name="phone_number" value="+79999999999"/>
+        </insert>
+        <insert tableName="transporters">
+            <column name="id" value="23b1743d-ca5a-459c-8f1c-5ec236fe5772"/>
+            <column name="name" value="Aeroflot"/>
+            <column name="phone_number" value="+79999999999"/>
+        </insert>
+
+        <insert tableName="routes">
+            <column name="id" value="c2032b19-29f5-4b88-958d-6c365af04c00"/>
+            <column name="departure_point" value="Nizhny Novgorod"/>
+            <column name="destination_point" value="Moscow"/>
+            <column name="transporter_id" value="23b1743d-ca5a-459c-8f1c-5ec236fe5772"/>
+            <column name="duration_in_minutes" value="67"/>
+        </insert>
+        <insert tableName="routes">
+            <column name="id" value="12032519-29f5-4b88-958d-6c365af04c00"/>
+            <column name="departure_point" value="Barcelona"/>
+            <column name="destination_point" value="Cheboksary"/>
+            <column name="transporter_id" value="a6a89f14-67e5-46fc-a868-a28ece344f45"/>
+            <column name="duration_in_minutes" value="243"/>
+        </insert>
+        <insert tableName="routes">
+            <column name="id" value="2022bf91-c6ea-406d-a9bf-2085aa7f6628"/>
+            <column name="departure_point" value="Madrid"/>
+            <column name="destination_point" value="Rome"/>
+            <column name="transporter_id" value="d3b1749d-ca5a-459c-8f1c-5ec236fe5776"/>
+            <column name="duration_in_minutes" value="121"/>
+        </insert>
+        <insert tableName="routes">
+            <column name="id" value="149b65a3-e8c0-4ef2-9127-a93552cfec78"/>
+            <column name="departure_point" value="Barcelona"/>
+            <column name="destination_point" value="Nizhnevartovsk"/>
+            <column name="transporter_id" value="a6a89f14-67e5-46fc-a868-a28ece344f45"/>
+            <column name="duration_in_minutes" value="387"/>
+        </insert>
+
+        <insert tableName="tickets">
+            <column name="id" value="352f1748-5887-49e3-bc6b-a981234e9044"/>
+            <column name="route_id" value="c2032b19-29f5-4b88-958d-6c365af04c00"/>
+            <column name="date" value="2023-09-29 20:00:00"/>
+            <column name="seat_number" value="2С"/>
+            <column name="price" value="20000"/>
+            <column name="currency" value="RUB"/>
+        </insert>
+        <insert tableName="tickets">
+            <column name="id" value="35231748-5887-49e3-bc6b-a981234e9044"/>
+            <column name="route_id" value="c2032b19-29f5-4b88-958d-6c365af04c00"/>
+            <column name="date" value="2023-09-29 20:00:00"/>
+            <column name="seat_number" value="22A"/>
+            <column name="price" value="22000"/>
+            <column name="currency" value="RUB"/>
+        </insert>
+        <insert tableName="tickets">
+            <column name="id" value="b39deb50-2238-4005-bc61-4a0649ab713d"/>
+            <column name="route_id" value="c2032b19-29f5-4b88-958d-6c365af04c00"/>
+            <column name="date" value="2023-09-29 20:00:00"/>
+            <column name="seat_number" value="13B"/>
+            <column name="price" value="18000"/>
+            <column name="currency" value="RUB"/>
+        </insert>
+
+        <insert tableName="tickets">
+            <column name="id" value="3fed1748-5887-4123-bc6b-a981234e9044"/>
+            <column name="route_id" value="12032519-29f5-4b88-958d-6c365af04c00"/>
+            <column name="date" value="2023-09-20 14:00:00"/>
+            <column name="seat_number" value="22A"/>
+            <column name="price" value="300"/>
+            <column name="currency" value="USD"/>
+        </insert>
+        <insert tableName="tickets">
+            <column name="id" value="3a693006-39ce-4d82-b85c-edd0fb721887"/>
+            <column name="route_id" value="12032519-29f5-4b88-958d-6c365af04c00"/>
+            <column name="date" value="2023-09-19 14:00:00"/>
+            <column name="seat_number" value="13B"/>
+            <column name="price" value="320"/>
+            <column name="currency" value="USD"/>
+        </insert>
+
+        <insert tableName="tickets">
+            <column name="id" value="6e7bad06-17d2-4a62-a549-e1650b66a507"/>
+            <column name="route_id" value="2022bf91-c6ea-406d-a9bf-2085aa7f6628"/>
+            <column name="date" value="2023-08-21 23:22:00"/>
+            <column name="seat_number" value="1D"/>
+            <column name="price" value="432"/>
+            <column name="currency" value="EUR"/>
+        </insert>
+        <insert tableName="tickets">
+            <column name="id" value="67dea117-1d44-4a24-a2b3-b449e8b1d6ea"/>
+            <column name="route_id" value="149b65a3-e8c0-4ef2-9127-a93552cfec78"/>
+            <column name="date" value="2023-11-22 04:23:00"/>
+            <column name="seat_number" value="24F"/>
+            <column name="price" value="523"/>
+            <column name="currency" value="USD"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="id" value="15322743-91db-44fc-b121-cdee08ac71cb"/>
+            <column name="email" value="krutoi1337@gmail.com"/>
+            <column name="password" value="$2a$10$eKjPHZRDOEiE5Ptf/v7Uhus0yT0/Z0OVnQE6QHCkUyoKbv27fswaK"/> <!-- 1234567 -->
+            <column name="full_name" value="Some Guy"/>
+            <column name="user_role" value="BUYER"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" value="c1a0a7cc-6820-4b21-aab7-ddccce572faf"/>
+            <column name="email" value="alala@gmail.com"/>
+            <column name="password" value="$2a$10$PdqIp4BkOZqoK1V556tGTu8S1txrMUgLZDXPEI9ED386YcundTfOO"/> <!-- 1234545 -->
+            <column name="full_name" value="Lyosha"/>
+            <column name="user_role" value="BUYER"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
