@@ -6,9 +6,9 @@ spring:
     change-log: classpath:/db/changelog.xml
     enabled: true
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:stmTest-kafka}
-    username: ${USERNAME:test}
-    password: ${PASSWORD:qwerty1234}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:stmTest-kafka}
+    username: ${DB_USERNAME:test}
+    password: ${DB_PASSWORD:qwerty1234}
     driver-class-name: org.postgresql.Driver
   kafka:
     bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
